@@ -23,12 +23,12 @@ Also
 Usage
 ====
 
-echo Caruta::url('http://example.com')
-		->text('&#8593;', '&#8595;')
-		->appends(array(	// Skippable
-			'name1' => 'value1', 
-			'name2' => 'value2', 
-			'name3' => 'value3'
+    echo Caruta::url('http://example.com')  
+    ->text('&#8593;', '&#8595;')  
+        ->appends(array(	// Skippable  
+			'name1' => 'value1',  
+			'name2' => 'value2',  
+			'name3' => 'value3'  
 		))
 		->keys('order', 'direction')	// Skippable
 		->links('column_name'); 
