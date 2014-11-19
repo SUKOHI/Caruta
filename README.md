@@ -39,3 +39,9 @@ Usage
 		->links('column_name', $separator = ''); 
 
 *All methods except links() are skippable.
+
+License
+====
+This package is licensed under the MIT License.
+
+Copyright 2014 Sukohi Kuhoh
