@@ -1,16 +1,22 @@
 <?php namespace Sukohi\Caruta;
 
+use Illuminate\Support\Facades\Request;
+use Illuminate\Support\Facades\HTML;
+use Illuminate\Support\Facades\Input;
 class Caruta {
 
 	const ORDER_KEY = 'orderby';
 	const DIRECTION_KEY = 'direction';
 	private $_url = '';
-	private $_texts = array();
-	private $_params = array();
+	private $_texts = array(
+		'asc' => '&#8593;', 
+		'desc' => '&#8595;'
+	);
 	private $_keys = array(
 		'order' => self::ORDER_KEY, 
 		'direction' => self::DIRECTION_KEY
 	);
+	private $_appends = array();
 
 	public function url($url) {
 	
@@ -31,7 +37,7 @@ class Caruta {
 	
 	public function appends($params) {
 		
-		$this->_params = $params;
+		$this->_appends = $params;
 		return $this;
 		
 	}
@@ -43,12 +49,6 @@ class Caruta {
 			'direction' => $direction_key
 		];
 		return $this;
-		
-	}
-	
-	public function links($column, $separator='&nbsp;') {
-		
-		return $this->asc($column) . $separator . $this->desc($column);
 		
 	}
 	
@@ -64,16 +64,28 @@ class Caruta {
 		
 	}
 	
+	public function links($column, $separator='') {
+		
+		return $this->asc($column) . $separator . $this->desc($column);
+		
+	}
+	
 	private function link($column, $text, $direction) {
 		
-		$params = $this->_params + array(
+		$params = $this->_appends + array(
 			$this->_keys['order'] => $column, 
 			$this->_keys['direction'] => $direction
 		);
 		
-		if(isset($_GET[$this->_keys['order']]) && $_GET[$this->_keys['direction']] == $direction) {
+		if(Input::has($this->_keys['order']) && Input::get($this->_keys['direction']) == $direction) {
 			
 			return $text;
+			
+		}
+		
+		if(empty($this->_url)) {
+			
+			$this->_url = Request::url();
 			
 		}
 		
@@ -82,17 +94,3 @@ class Caruta {
 	}
 	
 }
-
-/*** Example
-
-	echo Caruta::url('http://example.com')
-			->text('&#8593;', '&#8595;')
-			->appends(array(	// Skippable
-				'name1' => 'value1', 
-				'name2' => 'value2', 
-				'name3' => 'value3'
-			))
-			->keys('order', 'direction')	// Skippable
-			->links('column_name'); 
-
-***/
