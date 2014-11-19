@@ -10,25 +10,32 @@ After installation using composer, add the followings to the array in  app/confi
 
     'providers' => array(  
         ...Others...,  
-        'Sukohi\Caruta\CarutaServiceProvider'  
+        'Sukohi\Caruta\CarutaServiceProvider', 
     )
 
 Also
 
     'aliases' => array(  
         ...Others...,  
-        'Sukohi\Caruta\Facades\Caruta'
+        'Caruta' => 'Sukohi\Caruta\Facades\Caruta',
     )
 
 Usage
 ====
+**Minimal way**  
+    
+    {{ Caruta::links('column_name') }}
+
+**with Options**
 
     echo Caruta::url('http://example.com')  
-    ->text('&#8593;', '&#8595;')  
-        ->appends(array(	// Skippable  
-			'name1' => 'value1',  
-			'name2' => 'value2',  
-			'name3' => 'value3'  
+        ->text('&#8593;', '&#8595;')  
+        ->appends(array(
+			'key1' => 'value1',  
+			'key2' => 'value2',  
+			'key3' => 'value3'  
 		))
-		->keys('order', 'direction')	// Skippable
-		->links('column_name'); 
+		->keys('order', 'direction')
+		->links('column_name', $separator = ''); 
+
+*All methods except links() are skippable.
