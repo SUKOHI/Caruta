@@ -77,7 +77,9 @@ class Caruta {
 			$this->_keys['direction'] => $direction
 		);
 		
-		if(Input::has($this->_keys['order']) && Input::get($this->_keys['direction']) == $direction) {
+		if(Input::has($this->_keys['order']) 
+				&& Input::get($this->_keys['order']) == $column
+				&& Input::get($this->_keys['direction']) == $direction) {
 			
 			return $text;
 			
