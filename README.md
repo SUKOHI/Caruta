@@ -3,6 +3,9 @@ Caruta
 
 A PHP package mainly developed for Laravel to generate sort link(s).
 
+![alt text](http://i.imgur.com/qT8TjJn.png)
+![alt text](http://i.imgur.com/5RerRSA.png)  
+
 Installation&setting for Laravel
 ====
 
@@ -25,6 +28,8 @@ Usage
 **Minimal way**  
     
     {{ Caruta::links('column_name') }}
+// example  
+![alt text](http://i.imgur.com/qT8TjJn.png)  
 
 **with Options**
 
@@ -39,6 +44,17 @@ Usage
 		->links('column_name', $separator = ''); 
 
 *All methods except links() are skippable.
+
+**Sigle text way**  
+If you set the third argument like the below, only one link will be displayed.  
+
+    Caruta::text(
+        '<i class="fa fa-sort-asc"></i>',  
+        '<i class="fa fa-sort-desc"></i>',  
+        '<i class="fa fa-sort"></i>'
+    );
+
+![alt text](http://i.imgur.com/5RerRSA.png)  
 
 License
 ====

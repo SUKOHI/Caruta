@@ -25,12 +25,24 @@ class Caruta {
 	
 	}
 	
-	public function text($asc_text, $desc_text) {
+	public function text($asc_text, $desc_text, $default_text = null) {
 		
-		$this->_texts = array(
-			'asc' => $asc_text, 
-			'desc' => $desc_text
-		);
+		if(!is_null($default_text)) {
+			
+			$this->_texts = array(
+				'asc' => $asc_text,
+				'desc' => $desc_text, 
+				'default' => $default_text
+			);
+			
+		} else {
+
+			$this->_texts = array(
+				'asc' => $asc_text,
+				'desc' => $desc_text
+			);
+			
+		}
 		return $this;
 		
 	}
@@ -66,7 +78,41 @@ class Caruta {
 	
 	public function links($column, $separator='') {
 		
-		return $this->asc($column) . $separator . $this->desc($column);
+		if(isset($this->_texts['default'])) {
+			
+			$mode = 'default';
+			
+			if(Input::has($this->_keys['order'])
+					&& Input::get($this->_keys['order']) == $column) {
+				
+				$current_direction = Input::get($this->_keys['direction']);
+						
+				if(in_array($current_direction, array('asc', 'desc'))) {
+					
+					$mode = $current_direction;
+					
+				}
+				
+			}
+			
+			$text = $this->_texts[$mode];
+			$direction = ($mode == 'asc') ? 'desc' : 'asc';
+			return $this->link($column, $text, $direction);
+			
+		}
+		
+		$links = $this->asc($column) . $separator . $this->desc($column);
+		$this->_url = '';
+		$this->_texts = array(
+			'asc' => '&#8593;',
+			'desc' => '&#8595;'
+		);
+		$this->_keys = array(
+			'order' => self::ORDER_KEY,
+			'direction' => self::DIRECTION_KEY
+		);
+		$this->_appends = array();
+		return $links;
 		
 	}
 	
