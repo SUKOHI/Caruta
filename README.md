@@ -60,8 +60,10 @@ If you set the third argument like the below, only one link will be displayed.
 With model(Eloquent), you can automatically set "ORDER BY" like the below.
 
 	$items = Item::select('id', 'title');
-	$items = Caruta::sort($items);
+	$items = Caruta::sort($items, ['id', 'title', 'created_at']);
 	dd($items->get()->toArray());
+The second argument(Array) means that except specific column name(s) will be ignored to set "ORDER BY" for secure.  
+
 *Note: If you set the parameter name for "ORDER BY" using keys() method, you need to set it also in this case as well.
 License
 ====

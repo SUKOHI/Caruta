@@ -116,7 +116,7 @@ class Caruta {
 		
 	}
 	
-	public function sort($model) {
+	public function sort($model, $columns = array()) {
 		
 		$current_direction = Input::get($this->_keys['direction']);
 		
@@ -126,7 +126,15 @@ class Caruta {
 			
 		}
 		
-		return $model->orderBy(Input::get($this->_keys['order']), $current_direction);
+		$current_column = Input::get($this->_keys['order']);
+		
+		if(!in_array($current_column, $columns)) {
+			
+			return $model;
+			
+		}
+		
+		return $model->orderBy($current_column, $current_direction);
 		
 	}
 	
