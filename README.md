@@ -56,6 +56,13 @@ If you set the third argument like the below, only one link will be displayed.
 
 ![alt text](http://i.imgur.com/5RerRSA.png)  
 
+**Sort with model**  
+With model(Eloquent), you can automatically set "ORDER BY" like the below.
+
+	$items = Item::select('id', 'title');
+	$items = Caruta::sort($items);
+	dd($items->get()->toArray());
+*Note: If you set the parameter name for "ORDER BY" using keys() method, you need to set it also in this case as well.
 License
 ====
 This package is licensed under the MIT License.
