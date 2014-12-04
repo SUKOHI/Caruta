@@ -116,19 +116,18 @@ class Caruta {
 		
 	}
 	
-	public function sort($model, $columns = array()) {
+	public function sort($model, $columns = array(), $default_sort = array()) {
 		
 		$current_direction = Input::get($this->_keys['direction']);
-		
-		if(!in_array($current_direction, array('asc', 'desc'))) {
-			
-			return $model;
-			
-		}
-		
 		$current_column = Input::get($this->_keys['order']);
 		
-		if(!in_array($current_column, $columns)) {
+		if(!in_array($current_direction, array('asc', 'desc')) || !in_array($current_column, $columns)) {
+			
+			if(!empty($default_sort)) {
+				
+				$model->orderBy($default_sort[0], $default_sort[1]);
+				
+			}
 			
 			return $model;
 			

@@ -1,6 +1,6 @@
 {
     "name": "sukohi/caruta",
-    "description": "",
+    "description": "A PHP package mainly developed for Laravel to generate sort link(s).",
     "authors": [
         {
             "name": "Sukohi",
