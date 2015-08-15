@@ -1,22 +1,21 @@
 <?php namespace Sukohi\Caruta;
 
 use Illuminate\Support\Facades\Request;
-use Illuminate\Support\Facades\HTML;
-use Illuminate\Support\Facades\Input;
+
 class Caruta {
 
 	const ORDER_KEY = 'orderby';
 	const DIRECTION_KEY = 'direction';
 	private $_url = '';
-	private $_texts = array(
+	private $_texts = [
 		'asc' => '&#8593;', 
 		'desc' => '&#8595;'
-	);
-	private $_keys = array(
+	];
+	private $_keys = [
 		'order' => self::ORDER_KEY, 
 		'direction' => self::DIRECTION_KEY
-	);
-	private $_appends = array();
+	];
+	private $_appends = [];
 
 	public function url($url) {
 	
@@ -29,18 +28,18 @@ class Caruta {
 		
 		if(!is_null($default_text)) {
 			
-			$this->_texts = array(
+			$this->_texts = [
 				'asc' => $asc_text,
 				'desc' => $desc_text, 
 				'default' => $default_text
-			);
+			];
 			
 		} else {
 
-			$this->_texts = array(
+			$this->_texts = [
 				'asc' => $asc_text,
 				'desc' => $desc_text
-			);
+			];
 			
 		}
 		return $this;
@@ -82,12 +81,12 @@ class Caruta {
 			
 			$mode = 'default';
 			
-			if(Input::has($this->_keys['order'])
-					&& Input::get($this->_keys['order']) == $column) {
+			if(Request::has($this->_keys['order'])
+					&& Request::get($this->_keys['order']) == $column) {
 				
-				$current_direction = Input::get($this->_keys['direction']);
+				$current_direction = Request::input($this->_keys['direction']);
 						
-				if(in_array($current_direction, array('asc', 'desc'))) {
+				if(in_array($current_direction, ['asc', 'desc'])) {
 					
 					$mode = $current_direction;
 					
@@ -103,25 +102,25 @@ class Caruta {
 		
 		$links = $this->asc($column) . $separator . $this->desc($column);
 		$this->_url = '';
-		$this->_texts = array(
+		$this->_texts = [
 			'asc' => '&#8593;',
 			'desc' => '&#8595;'
-		);
-		$this->_keys = array(
+		];
+		$this->_keys = [
 			'order' => self::ORDER_KEY,
 			'direction' => self::DIRECTION_KEY
-		);
-		$this->_appends = array();
+		];
+		$this->_appends = [];
 		return $links;
 		
 	}
 	
-	public function sort($model, $columns = array(), $default_sort = array()) {
+	public function sort($model, $columns = [], $default_sort = []) {
 		
-		$current_direction = Input::get($this->_keys['direction']);
-		$current_column = Input::get($this->_keys['order']);
+		$current_direction = Request::input($this->_keys['direction']);
+		$current_column = Request::input($this->_keys['order']);
 		
-		if(!in_array($current_direction, array('asc', 'desc')) || !in_array($current_column, $columns)) {
+		if(!in_array($current_direction, ['asc', 'desc']) || !in_array($current_column, $columns)) {
 			
 			if(!empty($default_sort)) {
 				
@@ -139,14 +138,14 @@ class Caruta {
 	
 	private function link($column, $text, $direction) {
 		
-		$params = $this->_appends + array(
+		$params = $this->_appends + [
 			$this->_keys['order'] => $column, 
 			$this->_keys['direction'] => $direction
-		);
+		];
 		
-		if(Input::has($this->_keys['order']) 
-				&& Input::get($this->_keys['order']) == $column
-				&& Input::get($this->_keys['direction']) == $direction) {
+		if(Request::has($this->_keys['order'])
+				&& Request::input($this->_keys['order']) == $column
+				&& Request::input($this->_keys['direction']) == $direction) {
 			
 			return $text;
 			
