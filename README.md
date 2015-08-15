@@ -37,14 +37,14 @@ Usage
 ====
 **Minimal way**  
     
-    {{ Caruta::links('your-column-name') }}
+    {{ \Caruta::links('your-column-name') }}
     
 (example)  
 ![alt text](http://i.imgur.com/qT8TjJn.png)  
 
 **with Options**
 
-    echo Caruta::url('http://example.com')  
+    echo \Caruta::url('http://example.com')  
         ->text('&#8593;', '&#8595;')  
         ->appends([
 			'key1' => 'value1',  
@@ -60,7 +60,7 @@ Usage
 
 If you set the third argument like the below, only one link will be displayed.  
 
-    Caruta::text(
+    \Caruta::text(
         '<i class="fa fa-sort-asc"></i>',  
         '<i class="fa fa-sort-desc"></i>',  
         '<i class="fa fa-sort"></i>'
@@ -73,8 +73,8 @@ If you set the third argument like the below, only one link will be displayed.
 **Sort with model**  
 With model(Eloquent), you can automatically set "ORDER BY" like the below.
 
-	$items = Item::select('id', 'title');
-	$items = Caruta::sort($items, 
+	$items = \App\Item::select('id', 'title');
+	$items = \Caruta::sort($items, 
 	    ['id', 'title', 'created_at'], 
 	    ['updated_at', 'asc']
 	);
