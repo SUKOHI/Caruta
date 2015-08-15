@@ -1,7 +1,8 @@
 Caruta
 =====
 
-A PHP package mainly developed for Laravel to generate sort link(s).
+A PHP package mainly developed for Laravel to generate sort link(s).  
+(This is for Laravel 5+. [For Laravel 4.2](https://github.com/SUKOHI/Caruta/tree/1.0))
 
 ![alt text](http://i.imgur.com/qT8TjJn.png)
 ![alt text](http://i.imgur.com/5RerRSA.png)  
