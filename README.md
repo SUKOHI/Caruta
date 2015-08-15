@@ -1,51 +1,64 @@
 Caruta
 =====
 
-A PHP package mainly developed for Laravel to generate sort link(s).
+A PHP package mainly developed for Laravel to generate sort link(s).  
+(This is for Laravel 4.2. [For Laravel 5+](https://github.com/SUKOHI/Caruta))
 
-![alt text](http://i.imgur.com/qT8TjJn.png)
+![alt text](http://i.imgur.com/qT8TjJn.png) or 
 ![alt text](http://i.imgur.com/5RerRSA.png)  
 
-Installation&setting for Laravel
+Installation
 ====
 
-After installation using composer, add the followings to the array in  app/config/app.php
+Add this package name in composer.json
 
-    'providers' => array(  
+    "require": {
+      "sukohi/caruta": "1.*"
+    }
+
+Execute composer command.
+
+    composer update
+
+Register the service provider in app.php
+
+    'providers' => [
         ...Others...,  
-        'Sukohi\Caruta\CarutaServiceProvider', 
-    )
+        'Sukohi\Caruta\CarutaServiceProvider',
+    ]
 
-Also
+Also alias
 
-    'aliases' => array(  
+    'aliases' => [
         ...Others...,  
         'Caruta' => 'Sukohi\Caruta\Facades\Caruta',
-    )
+    ]
 
 Usage
 ====
 **Minimal way**  
     
-    {{ Caruta::links('column_name') }}
-// example  
+    {{ Caruta::links('your-column-name') }}
+    
+(example)  
 ![alt text](http://i.imgur.com/qT8TjJn.png)  
 
 **with Options**
 
     echo Caruta::url('http://example.com')  
         ->text('&#8593;', '&#8595;')  
-        ->appends(array(
+        ->appends([
 			'key1' => 'value1',  
 			'key2' => 'value2',  
 			'key3' => 'value3'  
-		))
+		])
 		->keys('order', 'direction')
 		->links('column_name', $separator = ''); 
 
-*All methods except links() are skippable.
+* All methods except links() are optional. See [methods](#methods)
 
-**Sigle text way**  
+**Single Text Way**  
+
 If you set the third argument like the below, only one link will be displayed.  
 
     Caruta::text(
@@ -53,6 +66,8 @@ If you set the third argument like the below, only one link will be displayed.
         '<i class="fa fa-sort-desc"></i>',  
         '<i class="fa fa-sort"></i>'
     );
+
+(example)
 
 ![alt text](http://i.imgur.com/5RerRSA.png)  
 
@@ -65,9 +80,30 @@ With model(Eloquent), you can automatically set "ORDER BY" like the below.
 	    ['updated_at', 'asc']
 	);
 	dd($items->get()->toArray());
+	
 * The second argument(Array) means that except specific column name(s) will be ignored to set "ORDER BY" for secure.   
-* The third argument(Array) will be used for default.
-* Note: If you set the parameter name for "ORDER BY" using keys() method, you need to set it also in this case as well.
+* The third argument(Array) will be used for default. And direction canbe `asc` and `desc`
+  
+**Note:** If you changed the parameter name "ORDER BY" to other using keys() method, you also need to set it in this case as well.
+
+Methods<a name="methods">
+====
+
+* url($url)
+
+`$url` is base URL that will be included in `href` property.
+
+* text($one, $two)
+
+`$one` and `$two` are text that will be included in link tag.
+
+e.g. &lt;a href="****"&gt;YOUR-TEXT&lt;/a&gt;
+
+* appends($values)
+
+`$values` is additional values that you want to include in link URL.
+
+e.g. http://example.com?orderby=*****&direction=asc&YOUR-KEY=YOUR-VALUE
 
 License
 ====
